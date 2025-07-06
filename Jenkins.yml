@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Deploy via Helm') {
+      steps {
+        sh """
+        helm upgrade --install flask-api ./api-helm-chart \
+          --set image.repository=trainwithshubham/notes-app-k8s \
+          --set image.tag=$BUILD_NUMBER
+        """
+      }
+    }
+  }
+}
